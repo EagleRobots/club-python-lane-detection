@@ -1,10 +1,11 @@
 # Performs RANSAC calculations for inputted potential points
-# provided by "ransac_warp_lane_detection.py" script
+# Referenced by "ransac_warp_lane_detection.py" script
+# Referenced by "ransac_trajectory.py" script
 import random
 from math import sqrt
 import itertools
 
-def compute(input_points, max_distance, max_iterations, ratio):
+def compute_ransac(input_points, max_distance, max_iterations, ratio):
     output = []
     old_count = 0
     iterations = 0
@@ -18,7 +19,6 @@ def compute(input_points, max_distance, max_iterations, ratio):
     # if we don't have at least two input points to test, then the algorithm cannot be run
     if total_points < 2:
         print("Not enough inputs")
-#        return None
     
     else:
         min_inliers = int(total_points * ratio)
@@ -28,10 +28,11 @@ def compute(input_points, max_distance, max_iterations, ratio):
             # Call the ransacing function and increment the iteration count
             [x_coord, y_coord] = compute_single_round(input_points, max_distance)
             iterations+=1
+#             print("Iteration #: {}".format(iterations))
 #             print("Inliers: {}".format(len(x_coord)))
 #             print("Minimum: {}".format(min_inliers))
             
-            # If a sufficient number of inliers have beeb found, return that list
+            # If a sufficient number of inliers have been found, return that list
             if len(x_coord) > min_inliers:
                 return [x_coord, y_coord]
 
@@ -86,6 +87,7 @@ def compute_single_round(input_points, max_distance):
 
     return [x_inliers, y_inliers]
 
+# Run the functions in main
 if __name__ == "__main__":
 
     # if we call this script directly explain that there is a separate demo file
